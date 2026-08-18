@@ -1,0 +1,300 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gift & Style Boutique</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff4f7;
+            color: #333;
+        }
+
+        header {
+            background: #d6336c;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        section {
+            background: white;
+            width: 85%;
+            max-width: 650px;
+            margin: 25px auto;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px #ddd;
+        }
+
+        h2 {
+            color: #d6336c;
+        }
+
+        select,
+        button {
+            padding: 10px;
+            margin: 8px 5px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background: #d6336c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ad2453;
+        }
+
+        label {
+            display: block;
+            margin: 12px 0;
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff0f4;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            background: #d6336c;
+            color: white;
+            padding: 15px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🎁 Gift & Style Boutique</h1>
+        <p>Find • Create • Style</p>
+    </header>
+
+
+    <!-- 1. GIFT FINDER -->
+
+    <section>
+        <h2>🎁 Gift Finder</h2>
+
+        <select id="person">
+            <option value="">Who is the gift for?</option>
+            <option value="partner">❤️ Partner</option>
+            <option value="friend">😊 Friend</option>
+            <option value="mom">🌷 Mom</option>
+        </select>
+
+        <select id="occasion">
+            <option value="">Select Occasion</option>
+            <option value="birthday">🎂 Birthday</option>
+            <option value="anniversary">💍 Anniversary</option>
+            <option value="wedding">💐 Wedding</option>
+        </select>
+
+        <button onclick="findGift()">Find Gift</button>
+
+        <div id="giftResult" class="result">
+            Your gift suggestion will appear here.
+        </div>
+    </section>
+
+
+    <!-- 2. BUILD YOUR GIFT BOX -->
+
+    <section>
+        <h2>🎀 Build Your Gift Box</h2>
+
+        <label>
+            <input type="checkbox" value="500" data-name="Chocolate">
+            🍫 Chocolate - ₹500
+        </label>
+
+        <label>
+            <input type="checkbox" value="300" data-name="Candle">
+            🕯️ Candle - ₹300
+        </label>
+
+        <label>
+            <input type="checkbox" value="400" data-name="Flowers">
+            🌹 Flowers - ₹400
+        </label>
+
+        <label>
+            <input type="checkbox" value="250" data-name="Message Card">
+            💌 Message Card - ₹250
+        </label>
+
+        <button onclick="calculateBox()">Calculate Total</button>
+
+        <div id="boxResult" class="result">
+            Select items to create your gift box.
+        </div>
+    </section>
+
+
+    <!-- 3. STYLE SUGGESTION -->
+
+    <section>
+        <h2>👗 Style Suggestion</h2>
+
+        <select id="style">
+            <option value="">Select Occasion</option>
+            <option value="party">🎉 Party</option>
+            <option value="casual">👕 Casual</option>
+            <option value="wedding">💐 Wedding</option>
+        </select>
+
+        <select id="color">
+            <option value="">Select Color</option>
+            <option value="black">🖤 Black</option>
+            <option value="pink">🩷 Pink</option>
+            <option value="blue">💙 Blue</option>
+        </select>
+
+        <button onclick="suggestStyle()">Suggest Style</button>
+
+        <div id="styleResult" class="result">
+            Your style suggestion will appear here.
+        </div>
+    </section>
+
+
+    <footer>
+        <p>© 2026 Gift & Style Boutique</p>
+    </footer>
+
+
+    <script>
+
+        // GIFT FINDER
+
+        function findGift() {
+
+            let person = document.getElementById("person").value;
+            let occasion = document.getElementById("occasion").value;
+
+            let result = "";
+
+            if (person === "" || occasion === "") {
+                result = "⚠️ Please select both options.";
+            }
+
+            else if (person === "partner" && occasion === "anniversary") {
+                result = "❤️ Perfume + Flowers + Love Card";
+            }
+
+            else if (person === "friend" && occasion === "birthday") {
+                result = "🎂 Chocolate + Cute Mug + Birthday Card";
+            }
+
+            else if (person === "mom") {
+                result = "🌷 Saree + Flowers + Greeting Card";
+            }
+
+            else {
+                result = "🎁 Customized Gift Box is a great choice!";
+            }
+
+            document.getElementById("giftResult").innerHTML = result;
+        }
+
+
+        // BUILD GIFT BOX
+
+        function calculateBox() {
+
+            let items = document.querySelectorAll(
+                'input[type="checkbox"]:checked'
+            );
+
+            let total = 0;
+            let selected = [];
+
+            items.forEach(function(item) {
+
+                total = total + Number(item.value);
+
+                selected.push(item.dataset.name);
+
+            });
+
+            if (selected.length === 0) {
+
+                document.getElementById("boxResult").innerHTML =
+                    "⚠️ Please select at least one item.";
+
+                return;
+            }
+
+            document.getElementById("boxResult").innerHTML =
+                "🎁 Selected Items: " +
+                selected.join(", ") +
+                "<br><br>💰 Total Price: ₹" + total;
+        }
+
+
+        // STYLE SUGGESTION
+
+        function suggestStyle() {
+
+            let style = document.getElementById("style").value;
+            let color = document.getElementById("color").value;
+
+            let result = "";
+
+            if (style === "" || color === "") {
+
+                result = "⚠️ Please select occasion and color.";
+
+            }
+
+            else if (style === "party") {
+
+                result =
+                    "✨ " + color +
+                    " party dress + handbag + heels";
+
+            }
+
+            else if (style === "casual") {
+
+                result =
+                    "👕 " + color +
+                    " casual outfit + sneakers";
+
+            }
+
+            else if (style === "wedding") {
+
+                result =
+                    "💃 " + color +
+                    " ethnic outfit + matching accessories";
+            }
+
+            document.getElementById("styleResult").innerHTML = result;
+        }
+
+    </script>
+
+</body>
+</html>
+```
